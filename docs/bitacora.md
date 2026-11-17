@@ -18,3 +18,14 @@ Registro cronológico de lo realizado. Una entrada por fase integrada a `develop
   río, tres poblados, 136 celdas de cultivo y 940 de zona núcleo.
 - El desnivel se escala con el tamaño del área para que las pendientes no se disparen en
   mapas pequeños.
+
+## 2026-11-16 · Fase 3 · Simulador del fuego (`feature/simulador-fuego`)
+
+- Autómata de Alexandridis compilado con numba; recorre solo el frente activo.
+- Medición: 3 000 incendios (100 planes × 30 escenarios) en 80 × 80 tardan centésimas de
+  segundo; el riesgo de velocidad del brief queda cubierto.
+- Con `p_h = 0.58` y 45 pasos, un incendio sin brechas quema en promedio 1 280 ha de 6 400,
+  con mucha variación (de 24 a 2 770 ha entre los percentiles 10 y 90).
+- Las tres pruebas de cordura del brief pasan, más equivalencia lote/individual y monotonía.
+- Ajuste: la prueba de la brecha exigía que ardiera todo el lado del fuego; con viento de
+  10 m/s el avance contra el viento es casi nulo, así que ahora solo exige que llegue a ella.
