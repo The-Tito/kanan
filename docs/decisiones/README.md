@@ -14,5 +14,6 @@ consecuencias. Una decisión no se edita para cambiarla: se agrega otra que la r
 | [007](007-nsga2-propio.md) | NSGA-II implementado a mano | Aceptada |
 | [008](008-escenarios-fijos.md) | 300 escenarios de entrenamiento fijos y prueba separada | Aceptada |
 | [009](009-hipervolumen-monte-carlo.md) | Hipervolumen por Monte Carlo, calculado al final | Aceptada |
-| [010](010-salida-reporte-estatico.md) | Salida como reporte HTML estático | Aceptada |
+| [010](010-salida-reporte-estatico.md) | Salida como reporte HTML estático | Reemplazada por 012 |
 | [011](011-video-generado-por-codigo.md) | Video explicativo generado por código | Aceptada |
+| [012](012-app-interactiva.md) | Aplicación interactiva; el reporte HTML pasa a ser opcional | Aceptada |
