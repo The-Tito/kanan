@@ -4,6 +4,10 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
 ## [Sin publicar]
 
+### Agregado
+
+- Documento de justificación del stack tecnológico, con tres alternativas comparadas.
+
 ## [0.2.0] - 2026-11-17
 
 ### Cambiado
