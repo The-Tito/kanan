@@ -89,10 +89,10 @@ def figura_mapa(mapa: Mapa, ruta: Path, brechas: np.ndarray | None = None,
     ax.set_title(titulo)
     ax.legend(handles=_leyenda_mapa(brechas is not None), loc="center left",
               bbox_to_anchor=(1.02, 0.5))  # fmt: skip
-    estilo.guardar(figura, ruta)
+    return estilo.guardar(figura, ruta)
 
 
-def figura_riesgo(mapa: Mapa, ruta: Path) -> None:
+def figura_riesgo(mapa: Mapa, ruta: Path | None = None):
     """Probabilidad de ignición de la base de conocimiento."""
     estilo.aplicar()
     figura, ax = plt.subplots(figsize=(6.6, 5.4))
@@ -105,11 +105,11 @@ def figura_riesgo(mapa: Mapa, ruta: Path) -> None:
     ax.set_ylabel("km (norte → sur)")
     ax.set_title("Riesgo de ignición (relativo al máximo)")
     figura.colorbar(imagen, ax=ax, fraction=0.046, pad=0.03)
-    estilo.guardar(figura, ruta)
+    return estilo.guardar(figura, ruta)
 
 
 def figura_probabilidad(mapa: Mapa, sin_brechas: np.ndarray, con_brechas: np.ndarray,
-                        brechas: np.ndarray, titulo: str, ruta: Path) -> None:  # fmt: skip
+                        brechas: np.ndarray, titulo: str, ruta: Path | None = None):  # fmt: skip
     """Fracción de escenarios en que arde cada celda, sin y con el plan."""
     estilo.aplicar()
     figura, ejes = plt.subplots(1, 2, figsize=(11, 4.9), sharey=True)
@@ -129,7 +129,7 @@ def figura_probabilidad(mapa: Mapa, sin_brechas: np.ndarray, con_brechas: np.nda
     ejes[0].set_ylabel("km (norte → sur)")
     figura.suptitle(titulo, x=0.07, ha="left", fontsize=12, fontweight="bold", color=estilo.TINTA)
     figura.colorbar(imagen, ax=ejes, fraction=0.025, pad=0.02, label="Probabilidad de quema")
-    estilo.guardar(figura, ruta)
+    return estilo.guardar(figura, ruta)
 
 
 def _capa_fuego(t_ignicion: np.ndarray, paso: int) -> np.ndarray:

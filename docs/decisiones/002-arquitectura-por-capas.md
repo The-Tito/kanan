@@ -25,6 +25,7 @@ cli  →  aplicacion  →  salidas
 | `validacion` | Métodos de referencia y comparación | las tres anteriores |
 | `salidas` | Gráficas, mapas, animación, tablas, reporte | datos ya calculados |
 | `aplicacion` | Caso de uso que orquesta una corrida | todas |
+| `interfaz` | Aplicación interactiva (agregada en ADR 012) | aplicacion, salidas |
 | `cli` | Argumentos y mensajes | aplicacion |
 
 Reglas:

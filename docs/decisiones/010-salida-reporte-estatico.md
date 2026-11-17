@@ -1,6 +1,6 @@
 # 010 · Salida como reporte HTML estático
 
-Fecha: 2026-11-16 · Estado: aceptada
+Fecha: 2026-11-16 · Estado: reemplazada por [012](012-app-interactiva.md)
 
 ## Contexto
 

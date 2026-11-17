@@ -34,6 +34,8 @@ from kanan.validacion import referencias
 from kanan.validacion.comparacion import ResultadoMetodo, comparar
 
 Avisar = Callable[[str], None]
+Progreso = Callable[[int, int], None]
+"""Recibe la generación actual y el total."""
 
 SIN_BRECHAS = "Sin brechas"
 AL_AZAR = "Brechas al azar"
@@ -96,7 +98,9 @@ def construir_sistema(config: Config) -> Sistema:
     )  # fmt: skip
 
 
-def optimizar(sistema: Sistema, avisar: Avisar = print) -> ResultadoAG:
+def optimizar(
+    sistema: Sistema, avisar: Avisar = print, progreso: Progreso | None = None
+) -> ResultadoAG:
     config = sistema.config
     inferior, superior = sistema.trazador.limites()
     periodicos = np.tile([False, False, True, False], config.brechas.k)
@@ -107,6 +111,8 @@ def optimizar(sistema: Sistema, avisar: Avisar = print) -> ResultadoAG:
     def al_avanzar(generacion: int, total: int) -> None:
         if generacion % cada == 0 or generacion == total:
             avisar(f"  generación {generacion}/{total}")
+        if progreso:
+            progreso(generacion, total)
 
     return nsga.ejecutar(sistema.evaluador.aptitud(sistema.entrenamiento), al_avanzar)
 
@@ -136,7 +142,9 @@ def validar(
     return comparar(sistema.evaluador, sistema.prueba, metodos, kanan=tuple(kanan))
 
 
-def ejecutar(config: Config, avisar: Avisar = print) -> ResultadoCorrida:
+def ejecutar(
+    config: Config, avisar: Avisar = print, progreso: Progreso | None = None
+) -> ResultadoCorrida:
     """Corre el AG y la validación; no escribe archivos."""
     segundos: dict[str, float] = {}
     inicio = time.perf_counter()
@@ -151,7 +159,7 @@ def ejecutar(config: Config, avisar: Avisar = print) -> ResultadoCorrida:
         f"× {len(sistema.entrenamiento)} escenarios"
     )
     inicio = time.perf_counter()
-    ag = optimizar(sistema, avisar)
+    ag = optimizar(sistema, avisar, progreso)
     segundos["optimizacion"] = time.perf_counter() - inicio
     planes, objetivos = ag.frente()
     elegidos = elegir_planes(objetivos)
@@ -215,9 +223,58 @@ NOTAS = [
 ]
 
 
-def guardar_salidas(resultado: ResultadoCorrida, carpeta: Path, avisar: Avisar = print) -> Path:
-    """Escribe figuras, animaciones, tablas, resumen y el reporte. Devuelve la ruta del reporte."""
+def filas_planes_elegidos(resultado: ResultadoCorrida) -> list[tablas.Fila]:
+    """Genes de las brechas de los tres planes elegidos."""
+    trazador = resultado.sistema.trazador
+    filas: list[tablas.Fila] = []
+    for clave, indice in resultado.elegidos.items():
+        brechas = trazador.brechas(resultado.frente_planes[indice])[0]
+        filas += tablas.filas_brechas(NOMBRES[clave], brechas)
+    return filas
+
+
+def guardar_datos(resultado: ResultadoCorrida, carpeta: Path) -> Path:
+    """Escribe tablas, historial, configuración y resumen. Devuelve la carpeta."""
     carpeta.mkdir(parents=True, exist_ok=True)
+    config = resultado.sistema.config
+    filas_comparacion = tablas.filas_comparacion(
+        resultado.comparacion, resultado.metodo(SIN_BRECHAS)
+    )
+    tablas.escribir_csv(filas_comparacion, carpeta / "comparacion.csv")
+    tablas.escribir_csv(filas_planes_elegidos(resultado), carpeta / "planes_brechas.csv")
+    tablas.escribir_csv(
+        tablas.filas_frente(resultado.frente_planes, resultado.frente_objetivos),
+        carpeta / "frente_pareto.csv",
+    )
+    historial = resultado.ag.historial
+    np.savez_compressed(
+        carpeta / "historial.npz",
+        objetivos=historial.objetivos, violacion=historial.violacion, rangos=historial.rangos,
+        hipervolumen=resultado.hipervolumen,
+    )  # fmt: skip
+    (carpeta / "config_usada.yaml").write_text(
+        yaml.safe_dump(config.a_dict(), allow_unicode=True, sort_keys=False), encoding="utf-8"
+    )
+    resumen = {
+        "objetivos": list(OBJETIVOS),
+        "planes_en_el_frente": len(resultado.frente_planes),
+        "evaluaciones": resultado.ag.evaluaciones,
+        "segundos": {k: round(v, 2) for k, v in resultado.segundos.items()},
+        "hipervolumen_final": round(float(resultado.hipervolumen[-1]), 4),
+        "comparacion": filas_comparacion,
+    }
+    (carpeta / "resumen.json").write_text(
+        json.dumps(resumen, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    return carpeta
+
+
+def guardar_reporte(resultado: ResultadoCorrida, carpeta: Path, avisar: Avisar = print) -> Path:
+    """Además de los datos, escribe figuras, animaciones y el reporte HTML (bajo pedido).
+
+    Devuelve la ruta del reporte.
+    """
+    guardar_datos(resultado, carpeta)
     sistema, config = resultado.sistema, resultado.sistema.config
     mapa, trazador, simulador = sistema.mapa, sistema.trazador, sistema.simulador
     colores = dict(zip(resultado.elegidos, estilo.COLORES_PLANES, strict=True))
@@ -242,7 +299,7 @@ def guardar_salidas(resultado: ResultadoCorrida, carpeta: Path, avisar: Avisar =
     graficas.figura_cajas(resultado.comparacion, carpeta / figuras["cajas"])
 
     prob_sin = simulador.probabilidad_quema(None, sistema.prueba)
-    planes_reporte, filas_genes = [], []
+    planes_reporte = []
     for clave, indice in resultado.elegidos.items():
         avisar(f"Generando mapas y animación: {NOMBRES[clave]}")
         cromosoma = resultado.frente_planes[indice : indice + 1]
@@ -270,7 +327,6 @@ def guardar_salidas(resultado: ResultadoCorrida, carpeta: Path, avisar: Avisar =
             carpeta / archivos["animacion"],
         )
         genes = tablas.filas_brechas(NOMBRES[clave], brechas)
-        filas_genes += genes
         en_prueba = resultado.metodo(nombre_kanan(clave)).medicion.objetivos()[0]
         planes_reporte.append(
             PlanReporte(
@@ -281,36 +337,8 @@ def guardar_salidas(resultado: ResultadoCorrida, carpeta: Path, avisar: Avisar =
         )
 
     filas_comparacion = tablas.filas_comparacion(resultado.comparacion, base)
-    tablas.escribir_csv(filas_comparacion, carpeta / "comparacion.csv")
-    tablas.escribir_csv(filas_genes, carpeta / "planes_brechas.csv")
-    tablas.escribir_csv(
-        tablas.filas_frente(resultado.frente_planes, resultado.frente_objetivos),
-        carpeta / "frente_pareto.csv",
-    )
-    historial = resultado.ag.historial
-    np.savez_compressed(
-        carpeta / "historial.npz",
-        objetivos=historial.objetivos, violacion=historial.violacion, rangos=historial.rangos,
-        hipervolumen=resultado.hipervolumen,
-    )  # fmt: skip
-    (carpeta / "config_usada.yaml").write_text(
-        yaml.safe_dump(config.a_dict(), allow_unicode=True, sort_keys=False), encoding="utf-8"
-    )
-
     mejor = resultado.metodo(nombre_kanan(MENOR_AREA))
     azar = resultado.metodo(AL_AZAR)
-    resumen = {
-        "objetivos": list(OBJETIVOS),
-        "planes_en_el_frente": len(resultado.frente_planes),
-        "evaluaciones": resultado.ag.evaluaciones,
-        "segundos": {k: round(v, 2) for k, v in resultado.segundos.items()},
-        "hipervolumen_final": round(float(resultado.hipervolumen[-1]), 4),
-        "comparacion": filas_comparacion,
-    }
-    (carpeta / "resumen.json").write_text(
-        json.dumps(resumen, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
-
     supera = mejor.area_media < azar.area_media
     conclusion = (
         f"Con el mismo presupuesto, el plan de menor área de Kanan deja arder "

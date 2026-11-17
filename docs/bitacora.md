@@ -106,3 +106,16 @@ Registro cronológico de lo realizado. Una entrada por fase integrada a `develop
 - Verificado: la sección y el `iframe` están en el reporte y Google responde a la URL como
   mapa incrustable. No se pudo ver el mapa dibujado en el navegador de pruebas, que no cargó
   contenido de terceros dentro del marco.
+
+## 2026-11-17 · Aplicación interactiva (`feature/app-interactiva`)
+
+- `kanan app` abre una aplicación en Streamlit; `kanan ejecutar` ya no genera HTML salvo con
+  `--reporte` (ADR 012).
+- Probado en el navegador: la corrida rápida tarda menos de un segundo de optimización; el
+  clic sobre un punto del frente cambia el plan del mapa; el incendio de ejemplo pasa de
+  3 033 ha sin brechas a 120 ha con el plan.
+- Corrección durante la prueba: con pestañas, el clic en la gráfica regresaba a la primera;
+  se cambiaron por un selector con estado.
+- Corrección: Streamlit escuchaba en toda la red local; `kanan app` ahora lo limita a
+  `localhost`.
+- Efecto colateral confirmado: el mapa de Google Maps sí se dibuja, en el reporte y en la app.
