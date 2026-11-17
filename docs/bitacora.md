@@ -62,3 +62,17 @@ Registro cronológico de lo realizado. Una entrada por fase integrada a `develop
 - Figuras de mapa, riesgo, evolución, hipervolumen, Pareto, comparación y cajas; animación
   del incendio; tablas CSV; reporte HTML.
 - Las brechas que salen del mapa se dibujan recortadas, igual que las trata el trazado.
+
+## 2026-11-17 · Fase 8 · Caso de uso y CLI (`feature/cli`)
+
+- `kanan ejecutar` hace la corrida completa en cerca de un minuto: 27 s de optimización y
+  28 s de validación (la búsqueda aleatoria repite las 20 100 evaluaciones del AG).
+- Resultado con la configuración por omisión, en 500 escenarios de prueba: sin brechas
+  1 318 ha; al azar 1 216; alrededor de poblados 1 088; búsqueda aleatoria 1 058; Kanan
+  (menor área) 855, es decir 35 % menos que sin brechas. Se cumple el criterio de terminado.
+- Ajuste a la selección de planes: el "más equilibrado" salía más barato que el de "menor
+  costo e impacto". Ahora el de menor costo exige una cuarta parte de la mejor reducción (antes
+  la mitad) y el equilibrado nunca puede ser más barato que él. Los tres quedan ordenados:
+  350 000, 125 671 y 53 823 pesos.
+- Revisión visual del reporte y de las figuras; se movió la leyenda de la gráfica de evolución
+  porque tapaba una curva.
