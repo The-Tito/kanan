@@ -36,3 +36,15 @@ Registro cronológico de lo realizado. Una entrada por fase integrada a `develop
 - El presupuesto por omisión (350 000 pesos) alcanza para unos 8.6 km de brechas; 81 % de los
   planes al azar lo exceden, así que la restricción sí aprieta.
 - Reparar 2 000 planes toma milisegundos.
+
+## 2026-11-16 · Fase 5 · Aptitud y NSGA-II (`feature/nsga2`)
+
+- `Evaluador` con los 4 objetivos y NSGA-II propio, validado contra ZDT1.
+- La corrida del brief (100 × 200 × 30) tarda 3 segundos.
+- Hallazgo: con 30 escenarios el AG sobreajusta (545 ha en entrenamiento, 1 165 en prueba,
+  contra 1 261 sin brechas). Con 300 la mejora en prueba es de 35 %. Se cambió el valor por
+  omisión (ADR 008).
+- Hallazgo: el extremo barato del frente es un plan con las brechas fuera del mapa (costo 0).
+  Es correcto como punto del frente, pero inútil como "plan de menor costo"; la selección
+  ahora exige al menos la mitad de la mejor reducción de área.
+- Ajustes de pruebas: el hipervolumen puede bajar un poco al recortar el frente.

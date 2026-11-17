@@ -1,4 +1,4 @@
-# Corrida completa del brief: 100 individuos x 200 generaciones x 30 escenarios.
+# Corrida completa: 100 individuos x 200 generaciones x 300 escenarios (ver ADR 008).
 mapa:
   tipo: sintetico
   filas: 80
@@ -21,8 +21,8 @@ fuego:
   duracion_max: 45
 
 escenarios:
-  n_entrenamiento: 30
-  n_prueba: 100
+  n_entrenamiento: 300
+  n_prueba: 500
   viento_vel_min: 2.0
   viento_vel_max: 10.0
   viento_dir_min: 120.0
