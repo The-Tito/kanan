@@ -125,3 +125,10 @@ Registro cronológico de lo realizado. Una entrada por fase integrada a `develop
 - Incluye la aplicación interactiva, el reporte HTML opcional, el mapa de la zona real y el
   video explicativo.
 - Verificación: 54 pruebas, `ruff` limpio y `kanan --version` en 0.2.0.
+
+## 2026-11-17 · Justificación del stack (`feature/doc-stack-tecnologico`)
+
+- `docs/stack-tecnologico.md`: por qué cada tecnología, tres stacks alternativos (bibliotecas
+  ya hechas, Julia, web con TypeScript y WebAssembly) y una comparación por criterios.
+- Las cifras de Kanan son mediciones del proyecto; las alternativas no se implementaron y el
+  documento lo dice.

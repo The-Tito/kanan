@@ -168,6 +168,7 @@ Un video de 7 minutos explica cómo funciona Kanan por dentro. Se genera con
 ```
 
 - Forma de trabajo (gitflow, commits): [`CONTRIBUTING.md`](CONTRIBUTING.md)
+- Justificación del stack tecnológico y alternativas: [`docs/stack-tecnologico.md`](docs/stack-tecnologico.md)
 - Planes por fase: [`docs/planes`](docs/planes/00-plan-maestro.md)
 - Decisiones y sus razones: [`docs/decisiones`](docs/decisiones/README.md)
 - Lo realizado: [`docs/bitacora.md`](docs/bitacora.md) y [`CHANGELOG.md`](CHANGELOG.md)
