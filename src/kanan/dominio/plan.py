@@ -15,6 +15,7 @@ from numba import njit, prange
 from kanan.config import ConfigBrechas
 from kanan.dominio import catalogos as cat
 from kanan.dominio.mapa import Mapa
+from kanan.paralelo import CANDADO
 
 GENES_POR_BRECHA = 4
 X, Y, ANGULO, LONGITUD = range(GENES_POR_BRECHA)
@@ -158,10 +159,12 @@ class TrazadorBrechas:
     def _ajustar(self, poblacion: np.ndarray, f_max: float) -> np.ndarray:
         c = self.config
         brechas = np.ascontiguousarray(self.brechas(poblacion), dtype=np.float64).copy()
-        _ajustar_poblacion(
-            brechas, f_max, c.presupuesto, c.longitud_min_m, c.longitud_max_m,
-            self._construible, self.costo_por_metro, self.impacto_por_metro, self.mapa.tam_celda_m,
-        )  # fmt: skip
+        with CANDADO:
+            _ajustar_poblacion(
+                brechas, f_max, c.presupuesto, c.longitud_min_m, c.longitud_max_m,
+                self._construible, self.costo_por_metro, self.impacto_por_metro,
+                self.mapa.tam_celda_m,
+            )  # fmt: skip
         return brechas.reshape(np.atleast_2d(poblacion).shape)
 
     def reparar(self, poblacion: np.ndarray) -> np.ndarray:
@@ -184,11 +187,12 @@ class TrazadorBrechas:
         mascaras = np.zeros((n, *self.mapa.forma), dtype=np.bool_)
         costos = np.empty(n)
         impactos = np.empty(n)
-        _trazar_poblacion(
-            brechas, c.longitud_min_m, c.longitud_max_m, self._construible,
-            self.costo_por_metro, self.impacto_por_metro, self.mapa.tam_celda_m,
-            mascaras, costos, impactos,
-        )  # fmt: skip
+        with CANDADO:
+            _trazar_poblacion(
+                brechas, c.longitud_min_m, c.longitud_max_m, self._construible,
+                self.costo_por_metro, self.impacto_por_metro, self.mapa.tam_celda_m,
+                mascaras, costos, impactos,
+            )  # fmt: skip
         return PlanesTrazados(mascaras, costos, impactos)
 
     def poblacion_aleatoria(self, n: int, rng: np.random.Generator) -> np.ndarray:

@@ -125,3 +125,15 @@ Registro cronológico de lo realizado. Una entrada por fase integrada a `develop
 - Incluye la aplicación interactiva, el reporte HTML opcional, el mapa de la zona real y el
   video explicativo.
 - Verificación: 54 pruebas, `ruff` limpio y `kanan --version` en 0.2.0.
+
+## 2026-11-17 · Hotfix 0.2.1: la app se caía (`hotfix/0.2.1`)
+
+- Síntoma: el servidor de la app terminó con código 134 tras 13 minutos de uso.
+- Causa, tomada del registro del servidor: "Numba workqueue threading layer is terminating:
+  Concurrent access has been detected". Streamlit atiende cada recarga de página en un hilo
+  distinto; si dos coinciden dentro de una función `parallel=True`, Numba aborta el proceso.
+- Corrección: un candado global (`kanan/paralelo.py`) alrededor de las cuatro llamadas a
+  núcleos paralelos, en el simulador y en el trazador.
+- Prueba nueva: ocho hilos simulando a la vez. Sin el candado tumba el proceso de pruebas; con
+  él pasa y da resultados idénticos.
+- El defecto venía desde la 0.2.0, por eso sale como hotfix desde `main`.

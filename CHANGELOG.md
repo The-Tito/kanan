@@ -4,6 +4,14 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
 ## [Sin publicar]
 
+## [0.2.1] - 2026-11-17
+
+### Corregido
+
+- La aplicación interactiva se cerraba de golpe si dos recargas de página simulaban al mismo
+  tiempo (por ejemplo, al tocar un control mientras algo seguía calculando). Las llamadas al
+  código paralelo ahora pasan por un candado.
+
 ## [0.2.0] - 2026-11-17
 
 ### Cambiado

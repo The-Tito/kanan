@@ -19,6 +19,7 @@ from numba import njit, prange
 from kanan.config import ConfigFuego
 from kanan.dominio import catalogos as cat
 from kanan.dominio.mapa import Mapa
+from kanan.paralelo import CANDADO
 from kanan.simulacion.escenarios import Escenarios
 
 # Vecindad de Moore en orden horario desde el norte: N, NE, E, SE, S, SO, O, NO.
@@ -194,22 +195,26 @@ class SimuladorFuego:
         n = brechas.shape[0]
         area = np.empty((n, len(escenarios)))
         valor = np.empty((n, len(escenarios)))
-        _simular_lote(
-            self._p_celda, self._p_pendiente, self._combustible, brechas,
-            escenarios.filas, escenarios.columnas, self._vientos(escenarios), escenarios.semillas,
-            self.config.duracion_max, np.ascontiguousarray(valor_celda, dtype=np.float64),
-            area, valor,
-        )  # fmt: skip
+        with CANDADO:
+            _simular_lote(
+                self._p_celda, self._p_pendiente, self._combustible, brechas,
+                escenarios.filas, escenarios.columnas, self._vientos(escenarios),
+                escenarios.semillas,
+                self.config.duracion_max, np.ascontiguousarray(valor_celda, dtype=np.float64),
+                area, valor,
+            )  # fmt: skip
         return area, valor
 
     def tiempos_ignicion(self, brechas: np.ndarray | None, escenarios: Escenarios) -> np.ndarray:
         """Paso de ignición por celda para cada escenario: (escenarios, filas, columnas)."""
         t_todos = np.empty((len(escenarios), *self.mapa.forma), dtype=np.int32)
-        _contar_quemas(
-            self._p_celda, self._p_pendiente, self._combustible_con(brechas),
-            escenarios.filas, escenarios.columnas, self._vientos(escenarios), escenarios.semillas,
-            self.config.duracion_max, t_todos,
-        )  # fmt: skip
+        with CANDADO:
+            _contar_quemas(
+                self._p_celda, self._p_pendiente, self._combustible_con(brechas),
+                escenarios.filas, escenarios.columnas, self._vientos(escenarios),
+                escenarios.semillas,
+                self.config.duracion_max, t_todos,
+            )  # fmt: skip
         return t_todos
 
     def simular(self, brechas: np.ndarray | None, escenarios: Escenarios, i: int = 0) -> Incendio:
