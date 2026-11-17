@@ -1,0 +1,43 @@
+# Corrida completa del brief: 100 individuos x 200 generaciones x 30 escenarios.
+mapa:
+  tipo: sintetico
+  filas: 80
+  columnas: 80
+  tam_celda_m: 100.0
+  semilla: 7
+
+brechas:
+  k: 8
+  longitud_min_m: 300.0
+  longitud_max_m: 2500.0
+  presupuesto: 350000.0
+  ancho_m: 10.0
+
+fuego:
+  p_h: 0.58
+  c1: 0.045
+  c2: 0.131
+  a_pendiente: 0.078
+  duracion_max: 45
+
+escenarios:
+  n_entrenamiento: 30
+  n_prueba: 100
+  viento_vel_min: 2.0
+  viento_vel_max: 10.0
+  viento_dir_min: 120.0
+  viento_dir_max: 240.0
+  semilla: 2026
+
+ag:
+  poblacion: 100
+  generaciones: 200
+  p_cruza: 0.9
+  p_intercambio_brecha: 0.5
+  eta_cruza: 15.0
+  eta_mutacion: 20.0
+  semilla: 42
+
+validacion:
+  n_planes_azar: 30
+  busqueda_aleatoria: true
