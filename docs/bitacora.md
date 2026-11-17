@@ -156,3 +156,8 @@ Registro cronológico de lo realizado. Una entrada por fase integrada a `develop
 - Prueba nueva: ocho hilos simulando a la vez. Sin el candado tumba el proceso de pruebas; con
   él pasa y da resultados idénticos.
 - El defecto venía desde la 0.2.0, por eso sale como hotfix desde `main`.
+
+## 2026-11-17 · Aviso de la barra de pasos (`feature/barra-pasos-sin-aviso`)
+
+- Al pulsar "Reproducir", Streamlit registraba un aviso porque la barra de pasos recibía su
+  valor por dos vías (argumento y estado de sesión). Ahora solo usa el estado de sesión.
