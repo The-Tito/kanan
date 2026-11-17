@@ -119,3 +119,9 @@ Registro cronológico de lo realizado. Una entrada por fase integrada a `develop
 - Corrección: Streamlit escuchaba en toda la red local; `kanan app` ahora lo limita a
   `localhost`.
 - Efecto colateral confirmado: el mapa de Google Maps sí se dibuja, en el reporte y en la app.
+
+## 2026-11-17 · Versión 0.2.0 (`release/0.2.0`)
+
+- Incluye la aplicación interactiva, el reporte HTML opcional, el mapa de la zona real y el
+  video explicativo.
+- Verificación: 54 pruebas, `ruff` limpio y `kanan --version` en 0.2.0.
