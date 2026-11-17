@@ -161,3 +161,11 @@ Registro cronológico de lo realizado. Una entrada por fase integrada a `develop
 
 - Al pulsar "Reproducir", Streamlit registraba un aviso porque la barra de pasos recibía su
   valor por dos vías (argumento y estado de sesión). Ahora solo usa el estado de sesión.
+
+## 2026-11-17 · Guía de estudio (`feature/guia-de-estudio`)
+
+- `docs/guia-de-estudio.md`: diez módulos en el orden en que se construye el proyecto, cada
+  uno con qué estudiar, dónde está en el código, cómo comprobarlo y un ejercicio.
+- Incluye la ruta de doce hitos para rehacerlo a mano, los errores ya cometidos, preguntas de
+  defensa con respuesta y una hoja de fórmulas.
+- Las referencias bibliográficas externas se citaron de memoria y la guía lo advierte.
