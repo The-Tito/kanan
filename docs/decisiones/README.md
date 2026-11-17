@@ -11,3 +11,6 @@ consecuencias. Una decisión no se edita para cambiarla: se agrega otra que la r
 | [004](004-azar-por-arista.md) | Números aleatorios por arista en el autómata | Aceptada |
 | [005](005-brechas-como-segmentos.md) | Trazado 4-conexo y costo por metro recorrido | Aceptada |
 | [006](006-reparacion-y-restricciones.md) | Reparación por presupuesto y dominancia con restricciones | Aceptada |
+| [007](007-nsga2-propio.md) | NSGA-II implementado a mano | Aceptada |
+| [008](008-escenarios-fijos.md) | 300 escenarios de entrenamiento fijos y prueba separada | Aceptada |
+| [009](009-hipervolumen-monte-carlo.md) | Hipervolumen por Monte Carlo, calculado al final | Aceptada |

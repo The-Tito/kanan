@@ -47,8 +47,8 @@ class ConfigFuego:
 
 @dataclass(frozen=True)
 class ConfigEscenarios:
-    n_entrenamiento: int = 30
-    n_prueba: int = 100
+    n_entrenamiento: int = 300
+    n_prueba: int = 500
     viento_vel_min: float = 2.0
     viento_vel_max: float = 10.0
     """Velocidad del viento en m/s."""
