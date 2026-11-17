@@ -14,7 +14,7 @@ from kanan.salidas import estilo
 from kanan.validacion.comparacion import ResultadoMetodo
 
 
-def figura_evolucion(historial: Historial, ruta: Path) -> None:
+def figura_evolucion(historial: Historial, ruta: Path | None = None):
     """Mejor valor y promedio de cada objetivo por generación (un panel por objetivo)."""
     estilo.aplicar()
     mejor, promedio = historial.mejor(), historial.promedio()
@@ -31,10 +31,10 @@ def figura_evolucion(historial: Historial, ruta: Path) -> None:
     figura.suptitle("Evolución de la aptitud (escenarios de entrenamiento)", x=0.07, ha="left",
                     fontsize=12, fontweight="bold", color=estilo.TINTA)  # fmt: skip
     figura.tight_layout()
-    estilo.guardar(figura, ruta)
+    return estilo.guardar(figura, ruta)
 
 
-def figura_hipervolumen(valores: np.ndarray, ruta: Path) -> None:
+def figura_hipervolumen(valores: np.ndarray, ruta: Path | None = None):
     estilo.aplicar()
     figura, ax = plt.subplots(figsize=(7, 3.6))
     ax.plot(np.arange(len(valores)), valores, color=estilo.SERIE_1)
@@ -44,10 +44,12 @@ def figura_hipervolumen(valores: np.ndarray, ruta: Path) -> None:
     ax.set_xlabel("Generación")
     ax.set_ylabel("Fracción dominada de la caja de referencia")
     ax.set_ylim(bottom=0)
-    estilo.guardar(figura, ruta)
+    return estilo.guardar(figura, ruta)
 
 
-def figura_pareto(frente: np.ndarray, elegidos: dict[str, tuple[int, str]], ruta: Path) -> None:
+def figura_pareto(
+    frente: np.ndarray, elegidos: dict[str, tuple[int, str]], ruta: Path | None = None
+):
     """Frente de Pareto en los seis pares de ejes.
 
     ``elegidos`` asigna a cada etiqueta el índice del plan en el frente y su color.
@@ -67,7 +69,7 @@ def figura_pareto(frente: np.ndarray, elegidos: dict[str, tuple[int, str]], ruta
     figura.suptitle(f"Frente de Pareto · {len(frente)} planes no dominados", x=0.05, ha="left",
                     fontsize=12, fontweight="bold", color=estilo.TINTA)  # fmt: skip
     figura.tight_layout(rect=(0, 0, 1, 0.95))
-    estilo.guardar(figura, ruta)
+    return estilo.guardar(figura, ruta)
 
 
 def _colores(resultados: list[ResultadoMetodo]) -> list[str]:
@@ -75,7 +77,7 @@ def _colores(resultados: list[ResultadoMetodo]) -> list[str]:
     return [next(planes, estilo.SERIE_1) if r.es_kanan else estilo.REFERENCIA for r in resultados]
 
 
-def figura_comparacion(resultados: list[ResultadoMetodo], ruta: Path) -> None:
+def figura_comparacion(resultados: list[ResultadoMetodo], ruta: Path | None = None):
     """Área quemada media de cada método en los escenarios de prueba."""
     estilo.aplicar()
     figura, ax = plt.subplots(figsize=(8.4, 0.5 * len(resultados) + 1.4))
@@ -90,10 +92,10 @@ def figura_comparacion(resultados: list[ResultadoMetodo], ruta: Path) -> None:
     ax.set_xlabel("Área quemada media (ha)")
     ax.set_title("Área quemada por método · escenarios de prueba, mismo presupuesto")
     ax.tick_params(axis="y", labelsize=9, labelcolor=estilo.TINTA)
-    estilo.guardar(figura, ruta)
+    return estilo.guardar(figura, ruta)
 
 
-def figura_cajas(resultados: list[ResultadoMetodo], ruta: Path) -> None:
+def figura_cajas(resultados: list[ResultadoMetodo], ruta: Path | None = None):
     """Diagrama de caja del área quemada por escenario de prueba."""
     estilo.aplicar()
     figura, ax = plt.subplots(figsize=(8.4, 0.55 * len(resultados) + 1.4))
@@ -117,4 +119,4 @@ def figura_cajas(resultados: list[ResultadoMetodo], ruta: Path) -> None:
     ax.set_xlabel("Área quemada por escenario (ha)")
     ax.set_title("Dispersión del área quemada · escenarios de prueba")
     ax.tick_params(axis="y", labelsize=9, labelcolor=estilo.TINTA)
-    estilo.guardar(figura, ruta)
+    return estilo.guardar(figura, ruta)

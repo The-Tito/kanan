@@ -62,6 +62,10 @@ def aplicar() -> None:
     )
 
 
-def guardar(figura, ruta) -> None:
+def guardar(figura, ruta=None):
+    """Escribe la figura en ``ruta`` y la cierra; sin ruta, la devuelve para mostrarla."""
+    if ruta is None:
+        return figura
     figura.savefig(ruta, dpi=DPI, bbox_inches="tight")
     plt.close(figura)
+    return None
