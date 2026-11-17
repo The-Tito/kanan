@@ -630,23 +630,31 @@ Algoritmos genéticos y optimización multiobjetivo:
 
 - Deb, K., Pratap, A., Agarwal, S. y Meyarivan, T. (2002). *A fast and elitist multiobjective
   genetic algorithm: NSGA-II*. IEEE Transactions on Evolutionary Computation, 6(2), 182–197.
+  DOI [10.1109/4235.996017](https://doi.org/10.1109/4235.996017).
 - Deb, K. y Agrawal, R. B. (1995). *Simulated binary crossover for continuous search space*.
-  Complex Systems, 9, 115–148.
+  Complex Systems, 9, 115–148. [Texto en la revista](https://www.complex-systems.com/?p=2148).
 - Zitzler, E., Deb, K. y Thiele, L. (2000). *Comparison of multiobjective evolutionary
   algorithms: empirical results*. Evolutionary Computation, 8(2), 173–195.
+  DOI [10.1162/106365600568202](https://doi.org/10.1162/106365600568202).
 - Deb, K. (2001). *Multi-Objective Optimization Using Evolutionary Algorithms*. Wiley.
+  ISBN 978-0-471-87339-6.
 
 Fuego y brechas:
 
 - Alexandridis, A., Vakalis, D., Siettos, C. I. y Bafas, G. V. (2008). *A cellular automata
   model for forest fire spread prediction: the case of the wildfire that swept through
-  Spetses Island in 1990*. Applied Mathematics and Computation, 204(1), 191–201.
-- Palacios-Meneses et al. (2023). *Comparison of metaheuristics for the firebreak placement
-  problem*. [arXiv:2311.17393](https://doi.org/10.48550/arXiv.2311.17393).
+  Spetses Island in 1990*. Applied Mathematics and Computation.
+  DOI [10.1016/j.amc.2008.06.046](https://doi.org/10.1016/j.amc.2008.06.046).
+- Palacios-Meneses, D., Carrasco, J., Dávila, S., Martínez, M., Mahaluf, R. y Weintraub, A.
+  (2023). *Comparison of metaheuristics for the firebreak placement problem: a
+  simulation-based optimization approach*.
+  [arXiv:2311.17393](https://doi.org/10.48550/arXiv.2311.17393).
 
 Herramientas:
 
 - Documentación de NumPy, Numba, Matplotlib y Streamlit.
 
-> Las referencias bibliográficas se citan de memoria: conviene verificar volumen y páginas
-> antes de usarlas en un trabajo formal.
+> Referencias verificadas en línea el 2026-11-17: autores, título, revista, año, volumen y
+> páginas coinciden con los registros públicos. La excepción es Alexandridis et al. (2008):
+> se confirmaron autores, título, revista, año y DOI, pero no el volumen ni las páginas, así
+> que se cita solo con su DOI; tómalos de la página del artículo antes de un trabajo formal.

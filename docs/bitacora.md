@@ -169,3 +169,12 @@ Registro cronológico de lo realizado. Una entrada por fase integrada a `develop
 - Incluye la ruta de doce hitos para rehacerlo a mano, los errores ya cometidos, preguntas de
   defensa con respuesta y una hoja de fórmulas.
 - Las referencias bibliográficas externas se citaron de memoria y la guía lo advierte.
+
+## 2026-11-17 · Verificación de referencias (`feature/verificar-referencias`)
+
+- Se verificaron en línea las seis referencias externas de la guía de estudio. Cinco
+  coinciden en todos sus datos; se agregaron DOI, ISBN y los autores completos del artículo de
+  brechas.
+- Alexandridis et al. (2008): confirmados autores, título, revista, año y DOI. El volumen y
+  las páginas que se habían citado de memoria (204(1), 191–201) no se pudieron confirmar y se
+  retiraron.
