@@ -9,3 +9,8 @@ dist/
 resultados/
 .DS_Store
 .claude/
+
+# Video explicativo: se regenera con python -m video.generar
+video/.trabajo/
+video/salida/
+video/audio/
