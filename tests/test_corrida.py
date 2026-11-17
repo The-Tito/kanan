@@ -2,7 +2,13 @@ from dataclasses import replace
 
 import numpy as np
 
-from kanan.aplicacion.corrida import AL_AZAR, SIN_BRECHAS, ejecutar, guardar_salidas
+from kanan.aplicacion.corrida import (
+    AL_AZAR,
+    SIN_BRECHAS,
+    ejecutar,
+    guardar_datos,
+    guardar_reporte,
+)
 from kanan.cli import main
 from kanan.config import Config, ConfigAG, ConfigEscenarios, ConfigValidacion
 
@@ -25,10 +31,20 @@ def test_corrida_completa_escribe_todas_las_salidas(tmp_path):
     sistema = resultado.sistema
     assert not np.array_equal(sistema.entrenamiento.semillas[:12], sistema.prueba.semillas[:12])
 
-    reporte = guardar_salidas(resultado, tmp_path, mensajes.append)
-    esperados = [
-        "reporte.html", "resumen.json", "config_usada.yaml", "historial.npz", "comparacion.csv",
-        "planes_brechas.csv", "frente_pareto.csv", "mapa.png", "riesgo.png", "evolucion.png",
+    # Por omisión solo se guardan datos: ni figuras ni HTML.
+    datos = ["resumen.json", "config_usada.yaml", "historial.npz", "comparacion.csv",
+             "planes_brechas.csv", "frente_pareto.csv"]  # fmt: skip
+    guardar_datos(resultado, tmp_path / "datos")
+    assert sorted(p.name for p in (tmp_path / "datos").iterdir()) == sorted(datos)
+
+    progreso = []
+    ejecutar(CHICA, lambda _: None, lambda g, total: progreso.append((g, total)))
+    assert progreso == [(g, 4) for g in range(1, 5)]
+
+    tmp_path = tmp_path / "reporte"
+    reporte = guardar_reporte(resultado, tmp_path, mensajes.append)
+    esperados = datos + [
+        "reporte.html", "mapa.png", "riesgo.png", "evolucion.png",
         "hipervolumen.png", "pareto.png", "comparacion.png", "cajas.png",
     ]  # fmt: skip
     for clave in resultado.elegidos:

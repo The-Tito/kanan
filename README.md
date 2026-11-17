@@ -51,7 +51,26 @@ python3 -m venv .venv
 
 ## Uso
 
-Corrida completa (cerca de un minuto; la primera vez compila el simulador):
+### Aplicación interactiva
+
+La forma principal de usar Kanan. Abre el navegador, deja ajustar los parámetros, corre el
+algoritmo y permite explorar el resultado sin generar archivos:
+
+```bash
+.venv/bin/kanan app
+```
+
+- **Resultado:** comparación con los métodos de referencia en incendios nuevos.
+- **Explorar planes:** haz clic en cualquier plan del frente de Pareto para verlo en el mapa,
+  con sus objetivos, y simula un incendio paso a paso sin y con sus brechas.
+- **Evolución:** objetivos e hipervolumen por generación.
+- **Zona de estudio:** el mapa sintético y la zona real en Google Maps.
+- **Datos:** descarga de las tablas en CSV.
+
+### Línea de comandos
+
+Corrida completa (cerca de un minuto; la primera vez compila el simulador). Imprime la
+comparación y guarda solo las tablas de datos:
 
 ```bash
 .venv/bin/kanan ejecutar --salida resultados/completa
@@ -63,18 +82,27 @@ Corrida corta para probar que todo funciona:
 .venv/bin/kanan ejecutar --config configs/rapido.yaml --salida resultados/rapido
 ```
 
+El reporte HTML con figuras y animaciones se genera solo si se pide:
+
+```bash
+.venv/bin/kanan ejecutar --salida resultados/completa --reporte
+```
+
 Solo dibujar el área de estudio:
 
 ```bash
 .venv/bin/kanan mapa --salida resultados/mapa
 ```
 
-Al terminar, abre `reporte.html` en la carpeta de salida. Las entradas (presupuesto, K,
+Las entradas (presupuesto, K,
 longitudes, viento, escenarios, parámetros del AG, semillas) se cambian en un YAML como
 [`configs/default.yaml`](configs/default.yaml); las claves que falten conservan su valor por
 omisión.
 
-### Qué produce
+### Qué produce `kanan ejecutar`
+
+Siempre: `comparacion.csv`, `planes_brechas.csv`, `frente_pareto.csv`, `resumen.json`,
+`historial.npz` y `config_usada.yaml`. Con `--reporte`, además:
 
 | Archivo | Contenido |
 | --- | --- |
@@ -84,8 +112,6 @@ omisión.
 | `plan_<clave>_mapa.png` | Mapa con las brechas de cada uno de los tres planes |
 | `plan_<clave>_probabilidad.png` | Probabilidad de quema sin y con el plan |
 | `plan_<clave>_incendio.gif` | Animación del mismo incendio sin y con el plan |
-| `planes_brechas.csv`, `frente_pareto.csv` | Genes de los planes y frente completo |
-| `resumen.json`, `historial.npz`, `config_usada.yaml` | Datos para repetir o analizar la corrida |
 
 ## Cómo funciona
 
@@ -114,7 +140,9 @@ src/kanan/
   validacion/      Métodos de referencia y comparación
   salidas/         Figuras, animación, tablas, reporte
   aplicacion/      Caso de uso que orquesta una corrida
+  interfaz/        Aplicación interactiva (Streamlit)
   cli.py           Línea de comandos
+video/             Video explicativo generado por código y su guion
 tests/             Pruebas (incluye las de cordura del simulador)
 configs/           Configuraciones de ejemplo
 docs/              Brief, planes, decisiones y bitácora
@@ -122,6 +150,12 @@ docs/              Brief, planes, decisiones y bitácora
 
 Las dependencias van en un solo sentido, de `cli` hacia `dominio`
 ([ADR 002](docs/decisiones/002-arquitectura-por-capas.md)).
+
+## Video explicativo
+
+Un video de 7 minutos explica cómo funciona Kanan por dentro. Se genera con
+`.venv/bin/python -m video.generar`; las instrucciones para agregarle narración están en
+[`video/README.md`](video/README.md).
 
 ## Desarrollo
 

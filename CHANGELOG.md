@@ -4,6 +4,20 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
 ## [Sin publicar]
 
+## [0.2.0] - 2026-11-17
+
+### Cambiado
+
+- `kanan ejecutar` ya no genera figuras ni `reporte.html` por omisión: guarda solo las tablas.
+  El reporte se pide con `--reporte`.
+
+### Agregado
+
+- Aplicación interactiva (`kanan app`): corre el algoritmo y permite explorar cada plan del
+  frente, simular incendios paso a paso y descargar las tablas.
+- Sección "La zona real" en el reporte, con la vista satelital de Google Maps de La Sepultura.
+- Video explicativo generado por código (`python -m video.generar`) y su guion por escena.
+
 ## [0.1.0] - 2026-11-17
 
 Primer MVP funcional.

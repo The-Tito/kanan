@@ -69,3 +69,4 @@ def test_tablas_y_reporte(tmp_path):
     html = (tmp_path / "reporte.html").read_text(encoding="utf-8")
     assert "Kanan &lt;b&gt;" in html and "Kanan <b>" not in html
     assert 'class="kanan"' in html and "pareto.png" in html and "c.gif" in html
+    assert "<iframe" in html and "output=embed" in html and "La Sepultura" in html
