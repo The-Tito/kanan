@@ -296,7 +296,10 @@ def pestana_planes(resultado: ResultadoCorrida) -> None:
                                      on_click=al_reproducir, width="stretch")  # fmt: skip
     velocidad = controles[1].selectbox("Velocidad", list(VELOCIDADES), 1, key="velocidad",
                                        label_visibility="collapsed")  # fmt: skip
-    paso = controles[2].slider("Paso de la simulación", 0, ultimo, ultimo, key=clave_paso,
+    # El valor inicial va por el estado de sesión (no como argumento) porque el botón
+    # Reproducir también lo escribe ahí; Streamlit avisa si se mezclan ambas vías.
+    st.session_state.setdefault(clave_paso, ultimo)
+    paso = controles[2].slider("Paso de la simulación", 0, ultimo, key=clave_paso,
                                label_visibility="collapsed")  # fmt: skip
 
     # La figura se arma una sola vez; al reproducir solo cambia la capa del fuego.
