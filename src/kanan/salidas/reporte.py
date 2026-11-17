@@ -9,6 +9,17 @@ from pathlib import Path
 from kanan.optimizacion.aptitud import ETIQUETAS, OBJETIVOS
 from kanan.salidas.tablas import Fila
 
+ZONA_REAL = "Reserva de la Biosfera La Sepultura, Chiapas"
+MAPA_ZONA_REAL = (
+    "https://maps.google.com/maps?q=Reserva+de+la+Biosfera+La+Sepultura,+Chiapas"
+    "&t=k&z=10&hl=es&output=embed"
+)
+"""Vista satelital incrustada de Google Maps; no requiere clave pero sí conexión."""
+ENLACE_ZONA_REAL = (
+    "https://www.google.com/maps/search/?api=1"
+    "&query=Reserva+de+la+Biosfera+La+Sepultura,+Chiapas"
+)
+
 CSS = """
 :root { --tinta:#0b0b0b; --secundaria:#52514e; --tenue:#898781; --linea:#e1e0d9;
         --fondo:#f9f9f7; --superficie:#fcfcfb; }
@@ -41,6 +52,8 @@ th { color:var(--secundaria); font-weight:600; }
 tr.kanan td:first-child { font-weight:600; }
 .punto { width:12px; height:12px; border-radius:50%; display:inline-block; }
 .dos { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:16px; }
+.mapa-real { width:100%; height:460px; border:1px solid var(--linea); border-radius:8px;
+             background:var(--superficie); display:block; }
 footer { margin-top:48px; color:var(--tenue); font-size:13px; }
 """
 
@@ -168,6 +181,15 @@ algoritmo nunca vio durante la optimización.</p>
   {_figura(f["mapa"], "Mapa del área de estudio")}
   {_figura(f["riesgo"], "Mapa de riesgo de ignición")}
 </div>
+
+<h2>La zona real</h2>
+<p>{escape(ZONA_REAL)}, vista satelital de Google Maps. Es solo una referencia visual: los
+resultados de este reporte se calcularon sobre el mapa sintético de arriba, no sobre este
+terreno.</p>
+<iframe class="mapa-real" src="{escape(MAPA_ZONA_REAL)}" title="Google Maps: {escape(ZONA_REAL)}"
+        referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+<p class="sub">El mapa necesita conexión a internet. Si no aparece,
+<a href="{escape(ENLACE_ZONA_REAL)}" target="_blank" rel="noopener">ábrelo en Google Maps</a>.</p>
 
 <h2>Parámetros de la corrida</h2>
 {parametros}
