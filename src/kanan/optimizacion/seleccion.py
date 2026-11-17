@@ -10,7 +10,7 @@ MENOR_AREA = "menor_area"
 MENOR_COSTO = "menor_costo_impacto"
 EQUILIBRADO = "equilibrado"
 
-FRACCION_REDUCCION = 0.5
+FRACCION_REDUCCION = 0.25
 """Parte de la mejor reducción de área que debe lograr el plan de menor costo."""
 
 NOMBRES = {
@@ -31,10 +31,11 @@ def elegir_planes(objetivos: np.ndarray) -> dict[str, int]:
 
     - Menor área quemada.
     - Menor costo e impacto: mínima suma de ambos objetivos normalizados, entre los planes
-      que logran al menos la mitad de la mejor reducción de área del frente. Sin ese piso el
-      elegido sería siempre "no construir nada", que es el extremo barato del frente.
+      que logran al menos una cuarta parte de la mejor reducción de área del frente. Sin ese
+      piso el elegido sería siempre "no construir nada", que es el extremo barato del frente.
     - Más equilibrado: el más cercano al punto ideal con los cuatro objetivos normalizados,
-      distinto de los dos anteriores cuando el frente lo permite.
+      distinto de los dos anteriores y nunca más barato que el de menor costo, para que los
+      tres queden ordenados de más protección a menos gasto.
     """
     norm = normalizar(objetivos)
     menor_area = int(np.lexsort((objetivos[:, COSTO], objetivos[:, AREA]))[0])
@@ -42,8 +43,11 @@ def elegir_planes(objetivos: np.ndarray) -> dict[str, int]:
     gasto[norm[:, AREA] > 1.0 - FRACCION_REDUCCION] = np.inf
     menor_costo = int(np.argmin(gasto))
     distancia = np.linalg.norm(norm, axis=1)
-    if len(objetivos) > 2:
-        distancia[[menor_area, menor_costo]] = np.inf
+    intermedios = np.ones(len(objetivos), dtype=bool)
+    intermedios[[menor_area, menor_costo]] = False
+    intermedios &= gasto >= gasto[menor_costo]
+    if intermedios.any():
+        distancia[~intermedios] = np.inf
     return {
         MENOR_AREA: menor_area,
         MENOR_COSTO: menor_costo,
