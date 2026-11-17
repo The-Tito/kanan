@@ -83,3 +83,14 @@ Registro cronológico de lo realizado. Una entrada por fase integrada a `develop
   omisión.
 - `main` recibe la versión con la etiqueta `v0.1.0`; el plan maestro queda cerrado con la
   lista de trabajo futuro.
+
+## 2026-11-17 · Video explicativo (`feature/video-explicativo`)
+
+- `python -m video.generar` produce un video de 6 min 54 s (1080p) en diez escenas, con
+  subtítulos, y el guion por escena (1 016 palabras) listo para narrar.
+- Para animar la evolución se guarda el mejor plan de cada generación envolviendo la función
+  de aptitud, sin tocar el NSGA-II.
+- Revisión visual de las diez escenas; se corrigieron mapas encimados, etiquetas sobre puntos
+  y subtítulos que cortaban a media frase.
+- Sincronía probada en una escena con una voz del sistema: audio de 41.1 s, escena de 41.9 s.
+- Pendiente: la narración definitiva. Sin los audios en `video/audio/` el video queda mudo.

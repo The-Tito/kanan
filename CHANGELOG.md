@@ -4,6 +4,10 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
 ## [Sin publicar]
 
+### Agregado
+
+- Video explicativo generado por código (`python -m video.generar`) y su guion por escena.
+
 ## [0.1.0] - 2026-11-17
 
 Primer MVP funcional.

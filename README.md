@@ -115,6 +115,7 @@ src/kanan/
   salidas/         Figuras, animación, tablas, reporte
   aplicacion/      Caso de uso que orquesta una corrida
   cli.py           Línea de comandos
+video/             Video explicativo generado por código y su guion
 tests/             Pruebas (incluye las de cordura del simulador)
 configs/           Configuraciones de ejemplo
 docs/              Brief, planes, decisiones y bitácora
@@ -122,6 +123,12 @@ docs/              Brief, planes, decisiones y bitácora
 
 Las dependencias van en un solo sentido, de `cli` hacia `dominio`
 ([ADR 002](docs/decisiones/002-arquitectura-por-capas.md)).
+
+## Video explicativo
+
+Un video de 7 minutos explica cómo funciona Kanan por dentro. Se genera con
+`.venv/bin/python -m video.generar`; las instrucciones para agregarle narración están en
+[`video/README.md`](video/README.md).
 
 ## Desarrollo
 
