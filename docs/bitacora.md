@@ -94,3 +94,15 @@ Registro cronológico de lo realizado. Una entrada por fase integrada a `develop
   y subtítulos que cortaban a media frase.
 - Sincronía probada en una escena con una voz del sistema: audio de 41.1 s, escena de 41.9 s.
 - Pendiente: la narración definitiva. Sin los audios en `video/audio/` el video queda mudo.
+
+## 2026-11-17 · Mapa de la zona real en el reporte (`feature/mapa-zona-real`)
+
+- El reporte incluye una sección con Google Maps (vista satelital) de la Reserva de la
+  Biosfera La Sepultura. Es solo referencia visual: los cálculos siguen sobre el mapa
+  sintético, y el texto de la sección lo dice.
+- Decisión menor: se usa la incrustación sin clave (`output=embed`) buscando la reserva por
+  nombre, en lugar de la API de Google Maps. No requiere cuenta ni clave, pero depende de
+  internet y de que Google mantenga ese formato; por eso hay un enlace de respaldo.
+- Verificado: la sección y el `iframe` están en el reporte y Google responde a la URL como
+  mapa incrustable. No se pudo ver el mapa dibujado en el navegador de pruebas, que no cargó
+  contenido de terceros dentro del marco.

@@ -6,6 +6,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
 ### Agregado
 
+- Sección "La zona real" en el reporte, con la vista satelital de Google Maps de La Sepultura.
 - Video explicativo generado por código (`python -m video.generar`) y su guion por escena.
 
 ## [0.1.0] - 2026-11-17
