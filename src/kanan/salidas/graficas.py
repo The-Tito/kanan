@@ -27,7 +27,7 @@ def figura_evolucion(historial: Historial, ruta: Path) -> None:
         ax.set_ylim(bottom=0)
     for ax in ejes[1]:
         ax.set_xlabel("Generación")
-    ejes[0, 0].legend(loc="upper right")
+    ejes[0, 0].legend(loc="lower left")
     figura.suptitle("Evolución de la aptitud (escenarios de entrenamiento)", x=0.07, ha="left",
                     fontsize=12, fontweight="bold", color=estilo.TINTA)  # fmt: skip
     figura.tight_layout()
