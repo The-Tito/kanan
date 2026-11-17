@@ -1,0 +1,11 @@
+# Corrida corta para probar que todo funciona (menos de un minuto).
+escenarios:
+  n_entrenamiento: 15
+  n_prueba: 40
+
+ag:
+  poblacion: 40
+  generaciones: 30
+
+validacion:
+  n_planes_azar: 10
