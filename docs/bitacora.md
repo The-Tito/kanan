@@ -56,3 +56,9 @@ Registro cronológico de lo realizado. Una entrada por fase integrada a `develop
   gastarían menos que Kanan y la comparación las perjudicaría por una razón ajena al método.
 - Decisión menor: el plan de poblados protege el lado de barlovento (de donde viene el viento
   medio de la temporada), que es lo que haría una brigada con pocas brechas por poblado.
+
+## 2026-11-16 · Fase 7 · Salidas (`feature/salidas`)
+
+- Figuras de mapa, riesgo, evolución, hipervolumen, Pareto, comparación y cajas; animación
+  del incendio; tablas CSV; reporte HTML.
+- Las brechas que salen del mapa se dibujan recortadas, igual que las trata el trazado.
