@@ -29,3 +29,10 @@ Registro cronológico de lo realizado. Una entrada por fase integrada a `develop
 - Las tres pruebas de cordura del brief pasan, más equivalencia lote/individual y monotonía.
 - Ajuste: la prueba de la brecha exigía que ardiera todo el lado del fuego; con viento de
   10 m/s el avance contra el viento es casi nulo, así que ahora solo exige que llegue a ella.
+
+## 2026-11-16 · Fase 4 · Plan de brechas (`feature/plan-brechas`)
+
+- `TrazadorBrechas`: cromosoma → máscara, costo e impacto, compilado y en paralelo.
+- El presupuesto por omisión (350 000 pesos) alcanza para unos 8.6 km de brechas; 81 % de los
+  planes al azar lo exceden, así que la restricción sí aprieta.
+- Reparar 2 000 planes toma milisegundos.

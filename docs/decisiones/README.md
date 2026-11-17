@@ -9,3 +9,5 @@ consecuencias. Una decisión no se edita para cambiarla: se agrega otra que la r
 | [002](002-arquitectura-por-capas.md) | Arquitectura por capas con el dominio al centro | Aceptada |
 | [003](003-mapa-sintetico-primero.md) | Mapa sintético en el MVP | Aceptada |
 | [004](004-azar-por-arista.md) | Números aleatorios por arista en el autómata | Aceptada |
+| [005](005-brechas-como-segmentos.md) | Trazado 4-conexo y costo por metro recorrido | Aceptada |
+| [006](006-reparacion-y-restricciones.md) | Reparación por presupuesto y dominancia con restricciones | Aceptada |
