@@ -4,6 +4,8 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
 ## [Sin publicar]
 
+## [0.2.0] - 2026-11-17
+
 ### Cambiado
 
 - `kanan ejecutar` ya no genera figuras ni `reporte.html` por omisión: guarda solo las tablas.
