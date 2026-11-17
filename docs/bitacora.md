@@ -132,3 +132,15 @@ Registro cronológico de lo realizado. Una entrada por fase integrada a `develop
   ya hechas, Julia, web con TypeScript y WebAssembly) y una comparación por criterios.
 - Las cifras de Kanan son mediciones del proyecto; las alternativas no se implementaron y el
   documento lo dice.
+
+## 2026-11-17 · Reproducir el incendio en la app (`feature/reproducir-incendio`)
+
+- El simulador de la app solo dejaba mover la barra de pasos. Ahora tiene un botón
+  "Reproducir" que recorre toda la secuencia, con velocidad lenta, normal o rápida; al terminar
+  la barra queda en el último paso.
+- La figura se arma una vez y en cada cuadro solo se cambia la capa del fuego: unos 0.15 s por
+  cuadro más la pausa elegida. Los incendios largos se limitan a 60 cuadros.
+- Probado en el navegador: el fuego avanza en ambos mapas a la vez. Durante la reproducción
+  la figura anterior se ve atenuada debajo hasta que termina; es cosmético.
+- Corrección durante la prueba: una cadena suelta junto a una constante aparecía como texto en
+  la página (Streamlit muestra las cadenas sueltas); se cambió por un comentario.

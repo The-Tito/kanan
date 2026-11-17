@@ -38,6 +38,16 @@ def test_la_app_corre_y_deja_explorar_un_plan():
     assert app.session_state["plan"] == 0
     assert app.radio(key="seccion").value == "Explorar planes"
 
+    # Reproducir el incendio recorre todos los pasos y deja la barra al final.
+    boton = next(b for b in app.button if b.key.startswith("reproducir-"))
+    app.selectbox(key="velocidad").set_value("Rápida").run()
+    barra = next(s for s in app.slider if s.key.startswith("paso-"))
+    barra.set_value(0).run()
+    boton.click().run()
+    assert not app.exception
+    barra = next(s for s in app.slider if s.key.startswith("paso-"))
+    assert barra.value == barra.max
+
 
 def test_una_configuracion_invalida_se_explica():
     app = AppTest.from_file(APP, default_timeout=120).run()
