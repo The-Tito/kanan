@@ -48,3 +48,11 @@ Registro cronológico de lo realizado. Una entrada por fase integrada a `develop
   Es correcto como punto del frente, pero inútil como "plan de menor costo"; la selección
   ahora exige al menos la mitad de la mejor reducción de área.
 - Ajustes de pruebas: el hipervolumen puede bajar un poco al recortar el frente.
+
+## 2026-11-16 · Fase 6 · Validación (`feature/validacion`)
+
+- Cuatro métodos de referencia y `comparar`, que los mide junto a los planes de Kanan.
+- Decisión menor: las brechas al azar se escalan hasta agotar el presupuesto. Sin eso
+  gastarían menos que Kanan y la comparación las perjudicaría por una razón ajena al método.
+- Decisión menor: el plan de poblados protege el lado de barlovento (de donde viene el viento
+  medio de la temporada), que es lo que haría una brigada con pocas brechas por poblado.
