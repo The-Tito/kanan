@@ -62,7 +62,8 @@ algoritmo y permite explorar el resultado sin generar archivos:
 
 - **Resultado:** comparación con los métodos de referencia en incendios nuevos.
 - **Explorar planes:** haz clic en cualquier plan del frente de Pareto para verlo en el mapa,
-  con sus objetivos, y simula un incendio paso a paso sin y con sus brechas.
+  con sus objetivos, y reproduce un incendio completo (o recórrelo paso a paso) sin y con
+  sus brechas.
 - **Evolución:** objetivos e hipervolumen por generación.
 - **Zona de estudio:** el mapa sintético y la zona real en Google Maps.
 - **Datos:** descarga de las tablas en CSV.

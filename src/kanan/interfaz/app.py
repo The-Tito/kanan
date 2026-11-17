@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import csv
 import io
+import time
 from dataclasses import replace
 
 import altair as alt
@@ -40,6 +41,10 @@ PREAJUSTES = {
     "Completa (cerca de 1 min)": {"poblacion": 100, "generaciones": 200, "entrenamiento": 300,
                                   "prueba": 500, "azar": 30, "busqueda": True},
 }  # fmt: skip
+# Pausa en segundos entre cuadros al reproducir un incendio. (Comentario y no cadena suelta:
+# Streamlit muestra en la página las cadenas sueltas del guion.)
+VELOCIDADES = {"Lenta": 0.35, "Normal": 0.12, "Rápida": 0.0}
+MAX_CUADROS_REPRODUCCION = 60
 OTRO_PLAN = "Otro plan del frente"
 SELECCIONADO = "Seleccionado"
 
@@ -279,20 +284,48 @@ def pestana_planes(resultado: ResultadoCorrida) -> None:
     )
     t_sin = simulador.simular(None, sistema.prueba, escenario).t_ignicion
     t_con = simulador.simular(mascara, sistema.prueba, escenario).t_ignicion
-    ultimo = int(max(t_sin.max(), t_con.max()))
-    paso = st.slider("Paso de la simulación", 0, max(ultimo, 1), max(ultimo, 1),
-                     key=f"paso-{plan}-{escenario}")  # fmt: skip
+    ultimo = max(int(max(t_sin.max(), t_con.max())), 1)
+    clave_paso = f"paso-{plan}-{escenario}"
+
+    def al_reproducir() -> None:
+        # La barra queda al final, donde termina la reproducción.
+        st.session_state[clave_paso] = ultimo
+
+    controles = st.columns([1.5, 1.2, 3.3])
+    reproducir = controles[0].button("▶ Reproducir", key=f"reproducir-{plan}-{escenario}",
+                                     on_click=al_reproducir, width="stretch")  # fmt: skip
+    velocidad = controles[1].selectbox("Velocidad", list(VELOCIDADES), 1, key="velocidad",
+                                       label_visibility="collapsed")  # fmt: skip
+    paso = controles[2].slider("Paso de la simulación", 0, ultimo, ultimo, key=clave_paso,
+                               label_visibility="collapsed")  # fmt: skip
+
+    # La figura se arma una sola vez; al reproducir solo cambia la capa del fuego.
     figura, ejes_fuego = plt.subplots(1, 2, figsize=(11, 5.2))
-    for ax, tiempos, titulo, plan_brechas in ((ejes_fuego[0], t_sin, "Sin brechas", None),
-                                              (ejes_fuego[1], t_con, "Con el plan", brechas)):  # fmt: skip
+    capas = []
+    paneles = ((ejes_fuego[0], t_sin, "Sin brechas", None),
+               (ejes_fuego[1], t_con, "Con el plan", brechas))  # fmt: skip
+    for ax, tiempos, _, plan_brechas in paneles:
         mapas.dibujar_fondo(ax, mapa, alfa=0.75)
         if plan_brechas is not None:
             mapas.dibujar_brechas(ax, plan_brechas, numerar=False)
-        ax.imshow(mapas._capa_fuego(tiempos, paso), extent=mapas._extension_km(mapa),
-                  interpolation="nearest", zorder=3)  # fmt: skip
-        hectareas = ((tiempos >= 0) & (tiempos <= paso)).sum() * mapa.area_celda_ha
-        ax.set_title(f"{titulo} · {hectareas:,.0f} ha")
-    mostrar(figura)
+        capas.append(ax.imshow(mapas._capa_fuego(tiempos, 0), extent=mapas._extension_km(mapa),
+                               interpolation="nearest", zorder=3))  # fmt: skip
+    lienzo = st.empty()
+
+    def pintar(momento: int) -> None:
+        for capa, (ax, tiempos, titulo, _) in zip(capas, paneles, strict=True):
+            capa.set_data(mapas._capa_fuego(tiempos, momento))
+            hectareas = ((tiempos >= 0) & (tiempos <= momento)).sum() * mapa.area_celda_ha
+            ax.set_title(f"{titulo} · paso {momento} · {hectareas:,.0f} ha")
+        lienzo.pyplot(figura, width="stretch")
+
+    if reproducir:
+        salto = max(1, -(-ultimo // MAX_CUADROS_REPRODUCCION))
+        for momento in range(0, ultimo, salto):
+            pintar(momento)
+            time.sleep(VELOCIDADES[velocidad])
+    pintar(paso)
+    plt.close(figura)
 
     st.subheader("Probabilidad de quema")
     st.caption("Fracción de los escenarios de prueba en que arde cada celda.")
