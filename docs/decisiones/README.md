@@ -17,3 +17,4 @@ consecuencias. Una decisión no se edita para cambiarla: se agrega otra que la r
 | [010](010-salida-reporte-estatico.md) | Salida como reporte HTML estático | Reemplazada por 012 |
 | [011](011-video-generado-por-codigo.md) | Video explicativo generado por código | Aceptada |
 | [012](012-app-interactiva.md) | Aplicación interactiva; el reporte HTML pasa a ser opcional | Aceptada |
+| [013](013-candado-para-codigo-paralelo.md) | Candado global para el código paralelo | Aceptada |
