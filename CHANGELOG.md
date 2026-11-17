@@ -6,6 +6,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/).
 
 ### Agregado
 
+- Guía de estudio: diez módulos, ruta para rehacer el proyecto y preguntas de defensa.
 - Botón "Reproducir" en el simulador de incendios de la app, con tres velocidades.
 - Documento de justificación del stack tecnológico, con tres alternativas comparadas.
 
