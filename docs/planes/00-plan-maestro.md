@@ -1,6 +1,6 @@
 # Plan maestro del MVP
 
-Fecha: 2026-11-16 · Estado: en ejecución · Fuente: [brief](../brief.md)
+Fecha: 2026-11-16 · Estado: completado (v0.1.0, 2026-11-17) · Fuente: [brief](../brief.md)
 
 ## Objetivo
 
@@ -57,3 +57,16 @@ mismo directorio.
 - Decisiones: [`docs/decisiones`](../decisiones/README.md).
 - Lo realizado: [`docs/bitacora.md`](../bitacora.md) y [`CHANGELOG.md`](../../CHANGELOG.md).
 - Forma de trabajo: [`CONTRIBUTING.md`](../../CONTRIBUTING.md).
+
+## Cierre
+
+Los cuatro criterios se cumplieron: 49 pruebas pasan; `kanan ejecutar` genera el reporte
+completo; el plan de menor área quema 855 ha contra 1 216 ha de las brechas al azar en
+escenarios de prueba; `main` lleva la etiqueta `v0.1.0`.
+
+Trabajo futuro, en orden sugerido:
+
+1. Mapa real de La Sepultura desde INEGI (uso de suelo serie VII y CEM).
+2. Varias corridas con semillas distintas para reportar la variación del AG.
+3. Calibrar el paso del autómata contra un incendio documentado.
+4. Exploración interactiva del frente de Pareto.

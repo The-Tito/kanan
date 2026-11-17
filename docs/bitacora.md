@@ -76,3 +76,10 @@ Registro cronológico de lo realizado. Una entrada por fase integrada a `develop
   350 000, 125 671 y 53 823 pesos.
 - Revisión visual del reporte y de las figuras; se movió la leyenda de la gráfica de evolución
   porque tapaba una curva.
+
+## 2026-11-17 · Versión 0.1.0 (`release/0.1.0`)
+
+- Verificación final: 49 pruebas, `ruff` limpio y corrida completa con la configuración por
+  omisión.
+- `main` recibe la versión con la etiqueta `v0.1.0`; el plan maestro queda cerrado con la
+  lista de trabajo futuro.
